@@ -1,0 +1,38 @@
+[
+  {
+    "question": "Which scholars won prizes in Physics and were affiliated with University of Cambridge?",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:AFFILIATED_WITH]->(i:Institution) WHERE lower(p.category) CONTAINS 'physics' AND lower(i.name) CONTAINS 'university of cambridge' RETURN s.knownName AS knownName, p.awardYear AS awardYear ORDER BY awardYear"
+  },
+  {
+    "question": "How many Chemistry laureates were born in Paris?",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c:City) WHERE lower(p.category) CONTAINS 'chemistry' AND lower(c.name) CONTAINS 'paris' RETURN count(DISTINCT s)"
+  },
+  {
+    "question": "List the institutions for Medicine laureates born in Germany.",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c:City), (s)-[:AFFILIATED_WITH]->(i:Institution) WHERE lower(p.category) CONTAINS 'medicine' AND lower(c.name) CONTAINS 'germany' RETURN DISTINCT i.name ORDER BY i.name"
+  },
+  {
+    "question": "Who won the Economics prize in 2010?",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear = 2010 AND lower(p.category) CONTAINS 'economics' RETURN s.knownName ORDER BY s.knownName"
+  },
+  {
+    "question": "Which laureates were affiliated with institutions in Cambridge?",
+    "cypher": "MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WHERE lower(i.name) CONTAINS 'cambridge' RETURN DISTINCT s.knownName ORDER BY s.knownName"
+  },
+  {
+    "question": "Find Physics laureates born in the United States and affiliated with MIT.",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:AFFILIATED_WITH]->(i:Institution), (s)-[:BORN_IN]->(c:City)-[:IS_CITY_IN]->(co:Country) WHERE lower(p.category) CONTAINS 'physics' AND lower(i.name) CONTAINS 'mit' AND lower(co.name) CONTAINS 'united states' RETURN s.knownName, p.awardYear ORDER BY p.awardYear"
+  },
+  {
+    "question": "How many laureates affiliated with Harvard University won prizes in Literature?",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:AFFILIATED_WITH]->(i:Institution) WHERE lower(i.name) CONTAINS 'harvard university' AND lower(p.category) CONTAINS 'literature' RETURN count(DISTINCT s)"
+  },
+  {
+    "question": "List all laureates who won prizes after 2000 and were born in London.",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c:City) WHERE p.awardYear > 2000 AND lower(c.name) CONTAINS 'london' RETURN DISTINCT s.knownName, p.awardYear ORDER BY p.awardYear"
+  },
+  {
+    "question": "Which scholars won prizes in Peace and were affiliated with institutions in Oslo?",
+    "cypher": "MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:AFFILIATED_WITH]->(i:Institution) WHERE lower(p.category) CONTAINS 'peace' AND lower(i.name) CONTAINS 'oslo' RETURN s.knownName AS knownName, p.awardYear AS awardYear ORDER BY awardYear"
+  }
+]
